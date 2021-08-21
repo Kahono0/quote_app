@@ -1,0 +1,56 @@
+<html>
+  <script src="/Download/angular-1.8.2/angular-1.8.2/angular.min.js"></script>
+  <body>
+    <div ng-app="myApp" ng-controller="myCtrl">
+      <div ng-repeat="x in quotes">
+        <p>{{x.msg}}</p>
+        <span>Upvotes: {{ x.upvotes }}</span><span style="margin:10px;">Downvotes: {{ x.downvotes }}</span>
+
+<br>
+
+<button ng-click="up($index)">Vote up</button>
+<button ng-click="down($index)">Vote down</button>
+<button ng-click="delete($index)">Delete</button>
+      
+
+</div>
+<form>
+  <label for="author">Author:</label>
+  <input type="text" id="author" ng-model="author"><br>
+  <label for="quote">Quote:</label>
+  <input type="text" id="quote" ng-model="msg"><br>
+  <button ng-click="add()">Add</button>
+</form>
+</div>
+<script>
+var app = angular.module('myApp', []);
+
+app.controller('myCtrl', function($scope) {
+  $scope.quotes = []
+  var quote = {"msg":"This is my first quote","author":"Doe","upvotes":0,"downvotes":0}
+  $scope.quotes.splice($scope.quotes.length,0,quote);
+  quote = {}
+  //var i = 0
+  $scope.up = function(x){
+    $scope.quotes[x].upvotes++
+  }
+  $scope.down = function(x){
+    $scope.quotes[x].downvotes++
+  }
+  $scope.delete=function(x){
+    $scope.quotes.splice(x,1)
+  }
+  $scope.add = function(){
+    quote.msg = $scope.msg
+    quote.author = $scope.author
+    quote.upvotes = 0
+    quote.downvotes = 0
+    $scope.quotes[$scope.quotes.length] = quote;
+    quote = {}
+    $scope.msg = ""
+    $scope.author = ""
+  }
+    
+});
+</script>
+</body>
